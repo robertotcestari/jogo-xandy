@@ -1,0 +1,117 @@
+.guess-input-container {
+  margin: 1rem 0;
+  width: 100%;
+  max-width: 500px;
+  padding: 0 1rem;
+}
+
+.guess-form {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  width: 100%;
+}
+
+.guess-input {
+  flex: 1;
+  min-width: 0;
+  padding: 1rem 1.2rem;
+  border: 2px solid #404040;
+  border-radius: 12px;
+  font-size: clamp(1rem, 3vw, 1.1rem);
+  background-color: #1a1a1a;
+  color: rgba(255, 255, 255, 0.87);
+  transition: all 0.3s ease;
+}
+
+.guess-input:focus {
+  outline: none;
+  border-color: #646cff;
+  box-shadow: 0 0 0 3px rgba(100, 108, 255, 0.2);
+}
+
+.guess-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.guess-submit-btn {
+  padding: 1rem 1.8rem;
+  background: linear-gradient(135deg, #646cff, #535bf2);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: clamp(1rem, 3vw, 1.1rem);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  min-width: fit-content;
+}
+
+.guess-submit-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #535bf2, #4c54d9);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(100, 108, 255, 0.4);
+}
+
+.guess-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Desktop */
+@media (min-width: 768px) {
+  .guess-input-container {
+    max-width: 600px;
+    margin: 2rem 0;
+  }
+
+  .guess-form {
+    gap: 1rem;
+  }
+
+  .guess-input {
+    padding: 1.2rem 1.5rem;
+    font-size: 1.1rem;
+  }
+
+  .guess-submit-btn {
+    padding: 1.2rem 2rem;
+    font-size: 1.1rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .guess-input-container {
+    padding: 0 0.5rem;
+  }
+
+  .guess-form {
+    gap: 0.5rem;
+  }
+
+  .guess-input {
+    padding: 0.9rem 1rem;
+  }
+
+  .guess-submit-btn {
+    padding: 0.9rem 1.2rem;
+    font-size: 0.95rem;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .guess-input {
+    background-color: #ffffff;
+    color: #213547;
+    border-color: #d1d5db;
+  }
+
+  .guess-input:focus {
+    border-color: #646cff;
+  }
+}

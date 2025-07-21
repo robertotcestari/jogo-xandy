@@ -1,24 +1,116 @@
 import type { GameImage } from '../types/game';
 
-// Lista das respostas em ordem de fase
-const gameAnswers = [
-  'lala',
-  'lele',
-  'carro',
-  'montanha',
-  'praia',
-  'hamburguer',
-  'bicicleta',
-  'casa',
+export interface GameLevel {
+  answer: string;
+  hints: string[];
+}
+
+// Configuração padrão das fases
+const defaultGameLevels: GameLevel[] = [
+  {
+    answer: 'lala',
+    hints: [
+      'É uma palavra repetida.',
+      'Começa com L.',
+      'É algo que uma criança pode falar.',
+    ],
+  },
+  {
+    answer: 'lele',
+    hints: [
+      'Também é uma palavra repetida.',
+      'Começa com L.',
+      'É parecido com a anterior.',
+    ],
+  },
+  {
+    answer: 'carro',
+    hints: [
+      'Tem rodas.',
+      'É usado para transporte.',
+      'Pode ser de várias cores.',
+    ],
+  },
+  {
+    answer: 'montanha',
+    hints: [
+      'É um lugar alto.',
+      'Tem neve em alguns lugares.',
+      'É famoso para trilhas.',
+    ],
+  },
+  {
+    answer: 'praia',
+    hints: [
+      'Tem areia.',
+      'É um destino de férias.',
+      'Tem mar.',
+    ],
+  },
+  {
+    answer: 'hamburguer',
+    hints: [
+      'É comida.',
+      'Tem pão e carne.',
+      'Muito popular nos EUA.',
+    ],
+  },
+  {
+    answer: 'bicicleta',
+    hints: [
+      'Tem duas rodas.',
+      'Usada para exercício.',
+      'Não tem motor.',
+    ],
+  },
+  {
+    answer: 'casa',
+    hints: [
+      'É onde você mora.',
+      'Tem portas e janelas.',
+      'Pode ser grande ou pequena.',
+    ],
+  },
 ];
 
-// Gera automaticamente as imagens baseado na lista de respostas
-export const gameImages: GameImage[] = gameAnswers.map((answer, index) => ({
-  id: index + 1,
-  url: `/images/${index + 1}-${answer}.jpg`,
-  answer: answer,
-  description: `Fase ${index + 1}: ${answer}`,
-}));
+// Função para carregar as configurações do localStorage
+export const loadGameLevels = (): GameLevel[] => {
+  try {
+    const stored = localStorage.getItem('game-levels');
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      return Array.isArray(parsed) && parsed.length > 0 ? parsed : defaultGameLevels;
+    }
+  } catch (error) {
+    console.warn('Erro ao carregar configurações do jogo:', error);
+  }
+  return defaultGameLevels;
+};
+
+// Função para salvar as configurações no localStorage
+export const saveGameLevels = (levels: GameLevel[]): void => {
+  try {
+    localStorage.setItem('game-levels', JSON.stringify(levels));
+  } catch (error) {
+    console.error('Erro ao salvar configurações do jogo:', error);
+  }
+};
+
+// Função para resetar para as configurações padrão
+export const resetToDefaultLevels = (): GameLevel[] => {
+  saveGameLevels(defaultGameLevels);
+  return defaultGameLevels;
+};
+
+// Gera automaticamente as imagens baseado na lista de níveis
+export const generateGameImages = (levels: GameLevel[]): GameImage[] => {
+  return levels.map((level, index) => ({
+    id: index + 1,
+    url: `/images/${index + 1}-${level.answer}.jpg`,
+    answer: level.answer,
+    description: `Fase ${index + 1}: ${level.answer}`,
+  }));
+};
 
 export const normalizeAnswer = (answer: string): string => {
   return answer
